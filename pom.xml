@@ -18,7 +18,7 @@
 
 	<groupId>com.pablozoani</groupId>
 	<artifactId>pz-pet-clinic</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>pz-pet-clinic</name>
 	<description />
 
@@ -48,7 +48,7 @@
 
 	<scm>
 		<developerConnection>scm:git:https://github.com/pablozoani/pz-pet-clinic.git</developerConnection>
-	  <tag>HEAD</tag>
+	  <tag>pz-pet-clinic-0.0.2</tag>
   </scm>
 
 </project>
