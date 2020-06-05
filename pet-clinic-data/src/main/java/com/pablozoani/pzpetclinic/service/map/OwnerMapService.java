@@ -1,11 +1,17 @@
 package com.pablozoani.pzpetclinic.service.map;
 
 import com.pablozoani.pzpetclinic.model.Owner;
-import com.pablozoani.pzpetclinic.service.CrudService;
+import com.pablozoani.pzpetclinic.service.OwnerService;
 
 import java.util.Set;
 
-public class OwnerMapService extends AbstractMapService<Owner, Long> implements CrudService<Owner, Long> {
+public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        // TODO
+        return null;
+    }
 
     @Override
     public Set<Owner> findAll() {
