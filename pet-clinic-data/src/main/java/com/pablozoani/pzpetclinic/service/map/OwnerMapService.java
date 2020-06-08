@@ -2,6 +2,9 @@ package com.pablozoani.pzpetclinic.service.map;
 
 import com.pablozoani.pzpetclinic.model.Owner;
 import com.pablozoani.pzpetclinic.service.OwnerService;
+import com.pablozoani.pzpetclinic.service.PetService;
+import com.pablozoani.pzpetclinic.service.PetTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -9,9 +12,17 @@ import java.util.Set;
 @Service
 public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
 
+    private final PetService petService;
+    private final PetTypeService petTypeService;
+
+    @Autowired
+    public OwnerMapService(PetService petService, PetTypeService petTypeService) {
+        this.petService = petService;
+        this.petTypeService = petTypeService;
+    }
+
     @Override
     public Owner findByLastName(String lastName) {
-        // TODO
         return null;
     }
 
@@ -26,8 +37,29 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
     }
 
     @Override
-    public Owner save(Owner owner) {
-        return super.save(owner);
+    public Owner save(final Owner owner) {
+        if (owner != null) {
+            owner.getPets().forEach(pet -> {
+                if (pet.getId() == null) {
+                    petService.save(pet);
+                } else if (!pet.getOwner().equals(owner)) {
+                    throw new RuntimeException("this pet has another owner");
+                }
+                if (pet.getOwner() == null) {
+                    pet.setOwner(owner);
+                }
+                if (pet.getPetType() != null) {
+                    if (pet.getPetType().getId() == null) {
+                        petTypeService.save(pet.getPetType());
+                    }
+                } else {
+                    throw new RuntimeException("null pet type");
+                }
+            });
+            return super.save(owner);
+        } else {
+            return null;
+        }
     }
 
     @Override
