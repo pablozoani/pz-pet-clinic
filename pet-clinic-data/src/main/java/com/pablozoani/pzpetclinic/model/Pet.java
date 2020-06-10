@@ -1,13 +1,24 @@
 package com.pablozoani.pzpetclinic.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Pet extends BaseEntity {
 
+    @Column(name = "name")
     private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pet_type_id")
     private PetType petType;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
     private Owner owner;
-    private LocalDate birthDay;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     public String getName() {
         return name;
@@ -36,12 +47,12 @@ public class Pet extends BaseEntity {
         return this;
     }
 
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public Pet setBirthDay(LocalDate birthDay) {
-        this.birthDay = birthDay;
+    public Pet setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
         return this;
     }
 }
