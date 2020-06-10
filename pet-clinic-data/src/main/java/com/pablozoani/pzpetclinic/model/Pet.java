@@ -2,6 +2,9 @@ package com.pablozoani.pzpetclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Pet extends BaseEntity {
@@ -19,6 +22,9 @@ public class Pet extends BaseEntity {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    private Set<Visit> visits = new HashSet<>();
 
     public String getName() {
         return name;
@@ -53,6 +59,24 @@ public class Pet extends BaseEntity {
 
     public Pet setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+        return this;
+    }
+
+    public Set<Visit> getVisits() {
+        return Collections.unmodifiableSet(visits);
+    }
+
+    public Pet addVisits(Visit... visits) {
+        for (Visit visit : visits) {
+            if (visit == null) {
+                throw new RuntimeException("null visit");
+            }
+            if (visit.getPet() != null) {
+                throw new RuntimeException("visit already has a pet");
+            }
+            this.visits.add(visit);
+            visit.setPet(this);
+        }
         return this;
     }
 }
