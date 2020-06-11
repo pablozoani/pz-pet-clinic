@@ -1,10 +1,7 @@
 package com.pablozoani.pzpetclinic.bootstrap;
 
 import com.pablozoani.pzpetclinic.model.*;
-import com.pablozoani.pzpetclinic.service.OwnerService;
-import com.pablozoani.pzpetclinic.service.PetTypeService;
-import com.pablozoani.pzpetclinic.service.SpecialtyService;
-import com.pablozoani.pzpetclinic.service.VetService;
+import com.pablozoani.pzpetclinic.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,15 +16,17 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
     @Autowired
     public DataLoader(OwnerService ownerService, VetService vetService,
                       PetTypeService petTypeService,
-                      SpecialtyService specialtyService) {
+                      SpecialtyService specialtyService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -78,6 +77,12 @@ public class DataLoader implements CommandLineRunner {
         brucesCat.setPetType(cat);
         o2.getPets().add(brucesCat);
         ownerService.save(o2);
+
+        Visit visit1 = new Visit();
+        visit1.setPet(brucesCat);
+        visit1.setDate(LocalDate.now());
+        visit1.setDescription("Bruce's Cat is OK.");
+        visitService.save(visit1);
 
         Specialty radiology = new Specialty();
         radiology.setDescription("Radiology");
