@@ -1,0 +1,15 @@
+spring:
+  messages:
+    basename: "messages/messages"
+  profiles:
+    active: "springdatajpa"
+  datasource:
+    url: "jdbc:h2:mem:testdb"
+    username: "sa"
+    password: ""
+    driverClassName: "org.h2.Driver"
+
+logging:
+  level:
+    org:
+      springframework: "INFO"

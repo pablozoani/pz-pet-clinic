@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,11 +51,18 @@ public class Owner extends Person {
     }
 
     public Set<Pet> getPets() {
-        return pets;
+        return Collections.unmodifiableSet(pets);
     }
 
-    public Owner setPets(Set<Pet> pets) {
-        this.pets = pets;
+    public Owner addPet(Pet pet) {
+        if (pet == null) {
+            throw new RuntimeException("pet cannot be null");
+        }
+        if (pet.getOwner() != null) {
+            throw new RuntimeException("this pet already has an owner");
+        }
+        pet.setOwner(this);
+        this.pets.add(pet);
         return this;
     }
 }
