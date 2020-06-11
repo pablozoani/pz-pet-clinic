@@ -8,6 +8,15 @@ spring:
     username: "sa"
     password: ""
     driverClassName: "org.h2.Driver"
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              action: "drop-and-create"
 
 logging:
   level:

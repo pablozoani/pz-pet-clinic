@@ -33,10 +33,11 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("bootstrap data started");
 
+        /*
         int petCount = petTypeService.findAll().size();
         if (petCount == 0) {
             loadData();
-        }
+        } */
 
         System.out.println("bootstrap data ended");
     }
