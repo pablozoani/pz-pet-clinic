@@ -1,12 +1,17 @@
 package com.pablozoani.pzpetclinic.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Setter @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder @Entity
 public class Pet extends BaseEntity {
 
     @Column(name = "name")
@@ -25,42 +30,6 @@ public class Pet extends BaseEntity {
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
     private Set<Visit> visits = new HashSet<>();
-
-    public String getName() {
-        return name;
-    }
-
-    public Pet setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public PetType getPetType() {
-        return petType;
-    }
-
-    public Pet setPetType(PetType petType) {
-        this.petType = petType;
-        return this;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public Pet setOwner(Owner owner) {
-        this.owner = owner;
-        return this;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public Pet setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-        return this;
-    }
 
     public Set<Visit> getVisits() {
         return Collections.unmodifiableSet(visits);

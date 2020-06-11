@@ -37,7 +37,9 @@ public class DataLoader implements CommandLineRunner {
         int petCount = petTypeService.findAll().size();
         if (petCount == 0) {
             loadData();
-        } */
+        }*/
+
+        loadData();
 
         System.out.println("bootstrap data ended");
     }

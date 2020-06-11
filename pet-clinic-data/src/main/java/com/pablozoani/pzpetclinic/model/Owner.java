@@ -1,5 +1,10 @@
 package com.pablozoani.pzpetclinic.model;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +13,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+@Setter @Getter
+@NoArgsConstructor
 @Entity
 public class Owner extends Person {
+
+    @Builder
+    public Owner(Long id, String firstName, String lastName, String address, String city, String telephone,
+                 Set<Pet> pets) {
+        super(id, firstName, lastName);
+        this.address = address;
+        this.city = city;
+        this.telephone = telephone;
+        this.pets = pets;
+    }
 
     @Column(name = "address")
     private String address;
@@ -22,33 +39,6 @@ public class Owner extends Person {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<Pet> pets = new HashSet<>();
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Owner setAddress(String address) {
-        this.address = address;
-        return this;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public Owner setCity(String city) {
-        this.city = city;
-        return this;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public Owner setTelephone(String telephone) {
-        this.telephone = telephone;
-        return this;
-    }
 
     public Set<Pet> getPets() {
         return Collections.unmodifiableSet(pets);
