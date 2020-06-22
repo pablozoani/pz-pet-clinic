@@ -1,6 +1,7 @@
 package com.pablozoani.pzpetclinic.service.map;
 
 import com.pablozoani.pzpetclinic.model.Owner;
+import com.pablozoani.pzpetclinic.model.Pet;
 import com.pablozoani.pzpetclinic.service.OwnerService;
 import com.pablozoani.pzpetclinic.service.PetService;
 import com.pablozoani.pzpetclinic.service.PetTypeService;
@@ -25,7 +26,13 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        return null;
+        Owner output = map.
+            values().
+            stream().
+            filter(o -> o.getLastName().equals(lastName)).
+            findFirst().
+            orElse(null);
+        return output;
     }
 
     @Override
@@ -41,7 +48,8 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
     @Override
     public Owner save(final Owner owner) {
         if (owner != null) {
-            owner.getPets().forEach(pet -> {
+            Set<Pet> pets = owner.getPets();
+            pets.forEach(pet -> {
                 if (pet.getId() == null) {
                     petService.save(pet);
                 } else if (!pet.getOwner().equals(owner)) {

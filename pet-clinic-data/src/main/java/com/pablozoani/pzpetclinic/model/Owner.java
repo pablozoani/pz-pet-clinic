@@ -9,7 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,13 +18,11 @@ import java.util.Set;
 public class Owner extends Person {
 
     @Builder
-    public Owner(Long id, String firstName, String lastName, String address, String city, String telephone,
-                 Set<Pet> pets) {
+    public Owner(Long id, String firstName, String lastName, String address, String city, String telephone) {
         super(id, firstName, lastName);
         this.address = address;
         this.city = city;
         this.telephone = telephone;
-        this.pets = pets;
     }
 
     @Column(name = "address")
@@ -41,7 +38,7 @@ public class Owner extends Person {
     private Set<Pet> pets = new HashSet<>();
 
     public Set<Pet> getPets() {
-        return Collections.unmodifiableSet(pets);
+        return pets;
     }
 
     public Owner addPet(Pet pet) {
